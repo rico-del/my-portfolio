@@ -1,0 +1,21 @@
+<svg width="960" height="600" viewBox="0 0 960 600" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Portfolio dashboard preview">
+  <rect width="960" height="600" rx="24" fill="#10151F"/>
+  <rect x="48" y="48" width="864" height="504" rx="18" fill="#161D29" stroke="#2A3445"/>
+  <rect x="82" y="88" width="220" height="22" rx="11" fill="#78DCCA"/>
+  <rect x="82" y="130" width="400" height="36" rx="10" fill="#F1F5F9"/>
+  <rect x="82" y="188" width="520" height="18" rx="9" fill="#7E8EA3"/>
+  <rect x="82" y="222" width="452" height="18" rx="9" fill="#7E8EA3"/>
+  <rect x="82" y="286" width="152" height="48" rx="10" fill="#78DCCA"/>
+  <rect x="248" y="286" width="132" height="48" rx="10" fill="#222C3A"/>
+  <rect x="622" y="110" width="236" height="300" rx="18" fill="#0D111A" stroke="#2A3445"/>
+  <circle cx="656" cy="146" r="7" fill="#78DCCA"/>
+  <rect x="678" y="138" width="126" height="16" rx="8" fill="#CBD5E1"/>
+  <rect x="654" y="190" width="72" height="58" rx="12" fill="#1E293B"/>
+  <rect x="754" y="190" width="72" height="58" rx="12" fill="#1E293B"/>
+  <rect x="654" y="270" width="72" height="58" rx="12" fill="#1E293B"/>
+  <rect x="754" y="270" width="72" height="58" rx="12" fill="#1E293B"/>
+  <rect x="654" y="360" width="172" height="18" rx="9" fill="#78DCCA"/>
+  <rect x="82" y="414" width="220" height="86" rx="14" fill="#222C3A"/>
+  <rect x="326" y="414" width="220" height="86" rx="14" fill="#222C3A"/>
+  <rect x="570" y="444" width="288" height="20" rx="10" fill="#7E8EA3"/>
+</svg>
