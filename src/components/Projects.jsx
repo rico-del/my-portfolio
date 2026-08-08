@@ -3,12 +3,12 @@ import { featuredProjects } from '../data/portfolioData.js';
 
 function Projects() {
   return (
-    <section className="section" id="work">
+<section className="section" id="work">
       <div className="section-head">
         <p className="eyebrow">Selected work</p>
-        <h2>Two grounded projects from my infrastructure and application work.</h2>
+        <h2>Three grounded projects from my infrastructure, automation, and application work.</h2>
         <p>
-          These are the builds I can speak to directly: one application delivery project and one AWS-focused infrastructure project.
+          These are the builds I can speak to directly: application delivery, AWS-focused infrastructure, and automation & recovery tooling.
         </p>
       </div>
 

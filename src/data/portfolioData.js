@@ -14,7 +14,7 @@ export const about = {
 };
 
 export const stats = [
-  { value: 2, suffix: '', label: 'featured project repos' },
+  { value: 3, suffix: '', label: 'featured project repos' },
   { value: 6, suffix: '', label: 'Terraform modules' },
   { value: 3, suffix: '', label: 'deployment tiers' },
   { value: 3, suffix: '', label: 'GitHub workflow families' },
@@ -43,7 +43,7 @@ export const featuredProjects = [
     ],
     liveDemo: '#',
     repository: 'https://github.com/rico-del/Munch_Catering',
-    gradFrom: '#eef2ff',
+gradFrom: '#eef2ff',
     gradVia: '#f8faff',
     gradTo: '#c7d2fe',
   },
@@ -64,6 +64,24 @@ export const featuredProjects = [
     gradFrom: '#eff6ff',
     gradVia: '#f8fbff',
     gradTo: '#bfdbfe',
+  },
+  {
+    id: 'scripts',
+    title: 'WSL Backup Scripts',
+    description:
+      'A low-overhead, Git-backed backup and recovery workflow for WSL and project workspaces, with parallel Bash and Python implementations and SSH-based offsite mirroring.',
+    accent: '#0f766e',
+    techStack: ['Bash', 'Python', 'Git', 'SSH', 'Cron-free watcher', 'Lock files'],
+    achievements: [
+      'Built offline-to-online detection with DNS reachability checks so backups only run when the network is available.',
+      'Implemented a lean sync workflow that mirrors the project tree into a local Git repo and pushes to a private remote over SSH without storing tokens.',
+      'Designed safety guardrails: exclude rules for node_modules, .venv, and Terraform state, a lock file to prevent overlapping runs, and a mirror outside the source tree to avoid recursive self-backup.',
+    ],
+    liveDemo: '#',
+    repository: 'https://github.com/rico-del/WSL-Backup-Script',
+    gradFrom: '#ecfdf5',
+    gradVia: '#f8fffb',
+    gradTo: '#a7f3d0',
   },
 ];
 

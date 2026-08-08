@@ -115,11 +115,11 @@ function Hero() {
           <span className="hero-panel__status">
             <MapPin size={14} aria-hidden="true" /> {contact.location}
           </span>
-        </div>
+</div>
         <TerminalPanel />
         <div className="hero-panel__footer">
           <div>
-            <strong>2</strong>
+            <strong>3</strong>
             <span>project repos</span>
           </div>
           <div>
