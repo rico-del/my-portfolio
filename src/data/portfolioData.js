@@ -3,7 +3,7 @@ export const contact = {
   role: 'Junior DevOps Engineer',
   email: 'derickomondi591@gmail.com',
   github: 'https://github.com/rico-del',
-  linkedin: 'https://www.linkedin.com/in/derick-omondi',
+  linkedin: 'https://www.linkedin.com/in/derick-omondi-254a7725b/',
   location: 'Nairobi, Kenya',
   resume: '/resume.pdf',
 };
