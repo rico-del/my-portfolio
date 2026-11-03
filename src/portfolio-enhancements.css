@@ -43,7 +43,7 @@
   outline-offset: 4px;
 }
 
-/* Fixed, non-interactive binary streams stay behind the content and move on compositor-friendly transforms. */
+/* A fixed, low-contrast data layer behind the page. */
 .app-shell {
   isolation: isolate;
 }
@@ -54,20 +54,20 @@
   inset: 0;
   overflow: hidden;
   pointer-events: none;
-  color: rgba(105, 79, 40, 0.28);
+  color: rgba(105, 79, 40, 0.23);
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 0.68rem;
+  font-size: clamp(0.58rem, 0.68vw, 0.7rem);
   font-weight: 500;
   line-height: 1;
   user-select: none;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 2%, #000 16%, #000 84%, transparent 98%);
-  mask-image: linear-gradient(to bottom, transparent 2%, #000 16%, #000 84%, transparent 98%);
+  opacity: 0.42;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 1%, #000 14%, #000 86%, transparent 99%);
+  mask-image: linear-gradient(to bottom, transparent 1%, #000 14%, #000 86%, transparent 99%);
 }
 
 .binary-lane {
   position: absolute;
   overflow: hidden;
-  opacity: 0.48;
   white-space: nowrap;
 }
 
@@ -75,20 +75,15 @@
   right: 0;
   left: 0;
   height: 1em;
+  top: var(--lane-position);
 }
-
-.binary-lane--horizontal.binary-lane--left { top: 21%; }
-.binary-lane--horizontal.binary-lane--right { top: 76%; }
 
 .binary-lane--vertical {
   top: 0;
   bottom: 0;
   width: 1ch;
-  writing-mode: horizontal-tb;
+  left: var(--lane-position);
 }
-
-.binary-lane--vertical.binary-lane--up { left: 18%; }
-.binary-lane--vertical.binary-lane--down { right: 18%; }
 
 .binary-track {
   display: flex;
@@ -99,12 +94,11 @@
 
 .binary-lane--horizontal .binary-track {
   flex-direction: row;
-  animation: binary-drift-left 110s linear infinite;
+  animation: binary-horizontal-loop var(--lane-duration) linear var(--lane-delay) infinite;
 }
 
 .binary-lane--horizontal.binary-lane--right .binary-track {
-  animation-name: binary-drift-right;
-  animation-duration: 125s;
+  animation-direction: reverse;
 }
 
 .binary-lane--horizontal .binary-track > span {
@@ -114,14 +108,12 @@
 }
 
 .binary-lane--vertical .binary-track {
-  height: max-content;
   flex-direction: column;
-  animation: binary-drift-up 95s linear infinite;
+  animation: binary-vertical-loop var(--lane-duration) linear var(--lane-delay) infinite;
 }
 
 .binary-lane--vertical.binary-lane--down .binary-track {
-  animation-name: binary-drift-down;
-  animation-duration: 115s;
+  animation-direction: reverse;
 }
 
 .binary-column {
@@ -136,25 +128,15 @@
   font-style: normal;
 }
 
-/* Each track is made of two exact copies; half-track translations loop without a visible reset. */
-@keyframes binary-drift-left {
+/* Two identical track halves make the loop seamless in either direction. */
+@keyframes binary-horizontal-loop {
   from { transform: translate3d(0, 0, 0); }
   to { transform: translate3d(-50%, 0, 0); }
 }
 
-@keyframes binary-drift-right {
-  from { transform: translate3d(-50%, 0, 0); }
-  to { transform: translate3d(0, 0, 0); }
-}
-
-@keyframes binary-drift-up {
+@keyframes binary-vertical-loop {
   from { transform: translate3d(0, 0, 0); }
   to { transform: translate3d(0, -50%, 0); }
-}
-
-@keyframes binary-drift-down {
-  from { transform: translate3d(0, -50%, 0); }
-  to { transform: translate3d(0, 0, 0); }
 }
 
 /* Keep terminal geometry steady while text changes, avoiding panel reflow. */
@@ -206,10 +188,18 @@
 }
 
 @media (max-width: 760px) {
+  .binary-backdrop {
+    font-size: 0.56rem;
+    opacity: 0.32;
+  }
+
   .binary-lane--vertical.binary-lane--up { left: 8%; }
-  .binary-lane--vertical.binary-lane--down { right: 8%; }
-  .binary-lane--horizontal.binary-lane--left { top: 24%; }
-  .binary-lane--horizontal.binary-lane--right { top: 80%; }
+  .binary-lane--vertical.binary-lane--down { left: auto; right: 8%; }
+
+  .binary-lane--horizontal.binary-lane--left:nth-child(1) { top: 20%; }
+  .binary-lane--horizontal.binary-lane--right:nth-child(3) { top: 39%; }
+  .binary-lane--horizontal.binary-lane--left:nth-child(2) { top: 66%; }
+  .binary-lane--horizontal.binary-lane--right:nth-child(4) { top: 84%; }
 }
 
 @media (prefers-reduced-motion: reduce) {
