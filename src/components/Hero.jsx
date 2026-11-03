@@ -1,11 +1,12 @@
 import { ArrowDownRight, ArrowUpRight, Github, MapPin } from 'lucide-react';
 import { about, contact, terminalLines } from '../data/portfolioData.js';
+import EditorialReveal from './EditorialReveal.jsx';
 
 function Hero() {
   return (
     <section className="hero section" id="intro" aria-labelledby="hero-title">
       <div className="hero__inner">
-        <div className="hero__copy">
+        <EditorialReveal className="hero__copy">
           <div className="availability"><span className="availability__dot" /> Cloud & platform engineering <span className="availability__divider">/</span> Nairobi, Kenya</div>
           <p className="eyebrow hero__eyebrow">Thoughtful infrastructure. Dependable delivery.</p>
           <h1 id="hero-title">I build the systems<br />that help software <span>ship with confidence.</span></h1>
@@ -15,9 +16,9 @@ function Hero() {
             <a className="action-text" href={contact.github} target="_blank" rel="noreferrer"><Github size={17} aria-hidden="true" /> GitHub profile <ArrowUpRight size={15} aria-hidden="true" /></a>
           </div>
           <div className="hero__note"><span>FOCUS</span> AWS · Terraform · CI/CD · Containers</div>
-        </div>
+        </EditorialReveal>
 
-        <aside className="build-card" aria-label="Engineering principles and sample workflow">
+        <EditorialReveal as="aside" className="build-card" delay={120} aria-label="Engineering principles and sample workflow">
           <div className="build-card__top"><span>ENGINEERING NOTES</span><span className="build-card__index">01 — 03</span></div>
           <p className="build-card__statement">Make the safe path<br />the <em>easy path.</em></p>
           <div className="build-card__rule" />
@@ -37,7 +38,7 @@ function Hero() {
             </div>
           </div>
           <div className="build-card__foot"><MapPin size={13} aria-hidden="true" /> Based in {contact.location}</div>
-        </aside>
+        </EditorialReveal>
       </div>
       <a className="hero__scroll" href="#work"><span>Scroll to selected work</span><ArrowDownRight size={15} aria-hidden="true" /></a>
     </section>
