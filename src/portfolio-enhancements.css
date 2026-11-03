@@ -43,17 +43,118 @@
   outline-offset: 4px;
 }
 
-/* A quiet, slow-moving wash of warm light sits behind the page content. */
-body::after {
-  background-size: 150% 150%;
-  background-repeat: no-repeat;
-  animation: ambient-drift 38s ease-in-out infinite alternate;
-  will-change: background-position;
+/* Fixed, non-interactive binary streams stay behind the content and move on compositor-friendly transforms. */
+.app-shell {
+  isolation: isolate;
 }
 
-@keyframes ambient-drift {
-  0% { background-position: 0% 0%, 100% 0%; }
-  100% { background-position: 100% 100%, 0% 100%; }
+.binary-backdrop {
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  color: rgba(105, 79, 40, 0.28);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.68rem;
+  font-weight: 500;
+  line-height: 1;
+  user-select: none;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 2%, #000 16%, #000 84%, transparent 98%);
+  mask-image: linear-gradient(to bottom, transparent 2%, #000 16%, #000 84%, transparent 98%);
+}
+
+.binary-lane {
+  position: absolute;
+  overflow: hidden;
+  opacity: 0.48;
+  white-space: nowrap;
+}
+
+.binary-lane--horizontal {
+  right: 0;
+  left: 0;
+  height: 1em;
+}
+
+.binary-lane--horizontal.binary-lane--left { top: 21%; }
+.binary-lane--horizontal.binary-lane--right { top: 76%; }
+
+.binary-lane--vertical {
+  top: 0;
+  bottom: 0;
+  width: 1ch;
+  writing-mode: horizontal-tb;
+}
+
+.binary-lane--vertical.binary-lane--up { left: 18%; }
+.binary-lane--vertical.binary-lane--down { right: 18%; }
+
+.binary-track {
+  display: flex;
+  width: max-content;
+  height: max-content;
+  will-change: transform;
+}
+
+.binary-lane--horizontal .binary-track {
+  flex-direction: row;
+  animation: binary-drift-left 110s linear infinite;
+}
+
+.binary-lane--horizontal.binary-lane--right .binary-track {
+  animation-name: binary-drift-right;
+  animation-duration: 125s;
+}
+
+.binary-lane--horizontal .binary-track > span {
+  display: block;
+  flex: 0 0 auto;
+  letter-spacing: 0.42em;
+}
+
+.binary-lane--vertical .binary-track {
+  height: max-content;
+  flex-direction: column;
+  animation: binary-drift-up 95s linear infinite;
+}
+
+.binary-lane--vertical.binary-lane--down .binary-track {
+  animation-name: binary-drift-down;
+  animation-duration: 115s;
+}
+
+.binary-column {
+  display: block;
+  flex: 0 0 auto;
+  text-align: center;
+}
+
+.binary-column i {
+  display: block;
+  height: 1.45em;
+  font-style: normal;
+}
+
+/* Each track is made of two exact copies; half-track translations loop without a visible reset. */
+@keyframes binary-drift-left {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes binary-drift-right {
+  from { transform: translate3d(-50%, 0, 0); }
+  to { transform: translate3d(0, 0, 0); }
+}
+
+@keyframes binary-drift-up {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(0, -50%, 0); }
+}
+
+@keyframes binary-drift-down {
+  from { transform: translate3d(0, -50%, 0); }
+  to { transform: translate3d(0, 0, 0); }
 }
 
 /* Keep terminal geometry steady while text changes, avoiding panel reflow. */
@@ -94,14 +195,26 @@ body::after {
   vertical-align: -0.12em;
 }
 
+.footer {
+  position: relative;
+  z-index: 1;
+}
+
 @keyframes project-arrive {
   from { opacity: 0; transform: translateY(18px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
+@media (max-width: 760px) {
+  .binary-lane--vertical.binary-lane--up { left: 8%; }
+  .binary-lane--vertical.binary-lane--down { right: 8%; }
+  .binary-lane--horizontal.binary-lane--left { top: 24%; }
+  .binary-lane--horizontal.binary-lane--right { top: 80%; }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  body::after {
-    animation: none;
+  .binary-track {
+    animation: none !important;
   }
 
   .project-card--animated {

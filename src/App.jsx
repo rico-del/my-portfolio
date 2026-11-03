@@ -7,11 +7,13 @@ import Toolchain from './components/Toolchain.jsx';
 import Skills from './components/Skills.jsx';
 import Contact from './components/Contact.jsx';
 import Footer from './components/Footer.jsx';
+import BinaryBackdrop from './components/BinaryBackdrop.jsx';
 import './portfolio-enhancements.css';
 
 function App() {
   return (
     <div className="app-shell">
+      <BinaryBackdrop />
       <Navbar />
       <main id="top">
         <Hero />
