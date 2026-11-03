@@ -1,79 +1,27 @@
-import { Award, ShieldCheck, TerminalSquare } from 'lucide-react';
+import { ArrowUpRight, Check } from 'lucide-react';
 import { certifications, opsPrinciples, skills } from '../data/portfolioData.js';
-import { useInView } from '../hooks/useInView.js';
-
-const principleIcons = [TerminalSquare, ShieldCheck, Award];
-
-function SkillCategory({ category }) {
-  const { ref, inView } = useInView({ threshold: 0.15 });
-
-  return (
-    <div className={`skill-category reveal ${inView ? 'is-visible' : ''}`} ref={ref}>
-      <h3>{category.category}</h3>
-      <div className="tag-row">
-        {category.items.map((item) => (
-          <span key={item}>{item}</span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function Principle({ principle, index }) {
-  const Icon = principleIcons[index % principleIcons.length];
-  const { ref, inView } = useInView({ threshold: 0.2 });
-
-  return (
-    <article className={`principle-card reveal ${inView ? 'is-visible' : ''}`} ref={ref}>
-      <div className="principle-icon">
-        <Icon size={20} aria-hidden="true" />
-      </div>
-      <h3>{principle.title}</h3>
-      <p>{principle.detail}</p>
-    </article>
-  );
-}
 
 function Skills() {
-  const { ref: listRef, inView: listInView } = useInView({ threshold: 0.15 });
-  const { ref: certRef, inView: certInView } = useInView({ threshold: 0.2 });
-
   return (
-    <section className="section skills-section" id="skills">
-      <div className="section-head reveal" data-anchor="skills">
-        <p className="eyebrow">Capabilities</p>
-        <h2>Concrete skills from the work above, not a generic stack list.</h2>
+    <section className="section approach-section" id="approach" aria-labelledby="approach-title">
+      <div className="section-heading section-heading--compact">
+        <div><p className="eyebrow">How I work <span>02 / 03</span></p><h2 id="approach-title">Good operations are<br /><em>designed in.</em></h2></div>
+        <p className="section-heading__aside">I care about useful engineering habits: clear change history, scoped access, repeatable environments, and checks that provide confidence rather than ceremony.</p>
       </div>
-
-      <div className="skills-layout">
-        <div className={`skills-grid reveal ${listInView ? 'is-visible' : ''}`} ref={listRef}>
-          {skills.map((category) => (
-            <SkillCategory key={category.category} category={category} />
+      <div className="approach-layout">
+        <div className="capability-list">
+          {skills.map((category, index) => (
+            <article className="capability-row" key={category.category}>
+              <span className="capability-row__index">0{index + 1}</span><div><h3>{category.category}</h3><div className="capability-tags">{category.items.map((item) => <span key={item}>{item}</span>)}</div></div>
+            </article>
           ))}
         </div>
-
-        <div className="skills-side">
-          <div className={`principle-stack reveal ${certInView ? 'is-visible' : ''}`} ref={certRef}>
-            {opsPrinciples.map((principle, index) => (
-              <Principle key={principle.title} principle={principle} index={index} />
-            ))}
-          </div>
-
-          <div className="cert-card reveal is-visible">
-            <p className="eyebrow">Certifications</p>
-            <div className="cert-list">
-              {certifications.map((cert) => (
-                <a className="cert-item" key={cert.name} href={cert.url} target="_blank" rel="noreferrer">
-                  <img src={cert.image} alt={cert.name} />
-                  <div>
-                    <strong>{cert.name}</strong>
-                    <span>{cert.issuer}</span>
-                    <span>{cert.note}</span>
-                  </div>
-                </a>
-              ))}
-            </div>
-          </div>
+        <div className="principles-panel">
+          <p className="principles-panel__label">Working principles</p>
+          {opsPrinciples.map((principle, index) => (
+            <article className="principle-row" key={principle.title}><span className="principle-row__check"><Check size={14} aria-hidden="true" /></span><div><span className="principle-row__index">0{index + 1}</span><h3>{principle.title}</h3><p>{principle.detail}</p></div></article>
+          ))}
+          <div className="credentials"><span className="credentials__label">Credentials</span>{certifications.map((cert) => <a href={cert.url} target="_blank" rel="noreferrer" key={cert.name}>{cert.name}<ArrowUpRight size={13} aria-hidden="true" /></a>)}</div>
         </div>
       </div>
     </section>

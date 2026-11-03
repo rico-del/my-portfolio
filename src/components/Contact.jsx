@@ -1,39 +1,15 @@
-import { Github, Linkedin, Mail, MapPin } from 'lucide-react';
+import { ArrowUpRight, Github, Linkedin, Mail, MapPin } from 'lucide-react';
 import { contact } from '../data/portfolioData.js';
-import { useInView } from '../hooks/useInView.js';
 
 function Contact() {
-  const { ref, inView } = useInView({ threshold: 0.3 });
-
   return (
-    <section className="section contact-section" id="contact">
-      <div className={`contact-card reveal ${inView ? 'is-visible' : ''}`} ref={ref}>
-        <div className="contact-copy">
-          <p className="eyebrow">Contact</p>
-          <h2>Looking for someone to own a practical DevOps workflow?</h2>
-          <p>
-            I am interested in roles where I can contribute to infrastructure, deployment automation, and reliable application delivery with clear evidence behind the work.
-          </p>
-          <div className="contact-meta">
-            <span><MapPin size={15} aria-hidden="true" /> {contact.location}</span>
-            <span><Mail size={15} aria-hidden="true" /> {contact.email}</span>
-          </div>
+    <section className="section contact-section" id="contact" aria-labelledby="contact-title">
+      <div className="contact-panel">
+        <div className="contact-panel__meta"><p className="eyebrow">Contact <span>03 / 03</span></p><span className="contact-panel__location"><MapPin size={14} aria-hidden="true" /> {contact.location}</span></div>
+        <div className="contact-panel__main"><div><h2 id="contact-title">Let’s make the<br /><em>next release</em> better.</h2><p>Interested in infrastructure, automation, and reliable software delivery? I’d be glad to hear what your team is building.</p></div>
+          <div className="contact-links"><a href={`mailto:${contact.email}`}><span><Mail size={17} aria-hidden="true" /> Email</span><ArrowUpRight size={16} aria-hidden="true" /></a><a href={contact.linkedin} target="_blank" rel="noreferrer"><span><Linkedin size={17} aria-hidden="true" /> LinkedIn</span><ArrowUpRight size={16} aria-hidden="true" /></a><a href={contact.github} target="_blank" rel="noreferrer"><span><Github size={17} aria-hidden="true" /> GitHub</span><ArrowUpRight size={16} aria-hidden="true" /></a></div>
         </div>
-
-        <div className="contact-actions">
-          <a className="button primary" href={`mailto:${contact.email}`}>
-            <Mail size={17} aria-hidden="true" /> Email me
-          </a>
-          <a className="button" href={contact.github} target="_blank" rel="noreferrer">
-            <Github size={17} aria-hidden="true" /> GitHub
-          </a>
-          <a className="button" href={contact.linkedin} target="_blank" rel="noreferrer">
-            <Linkedin size={17} aria-hidden="true" /> LinkedIn
-          </a>
-          <a className="button" href={contact.resume} target="_blank" rel="noreferrer">
-            Resume PDF
-          </a>
-        </div>
+        <a className="contact-panel__email" href={`mailto:${contact.email}`}>{contact.email}</a>
       </div>
     </section>
   );
