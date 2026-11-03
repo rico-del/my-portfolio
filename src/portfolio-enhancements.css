@@ -1,0 +1,66 @@
+.project-card--animated {
+  isolation: isolate;
+  animation: project-arrive 650ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
+  animation-delay: calc(var(--card-index, 0) * 110ms);
+}
+
+.project-card--animated::after {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  background: linear-gradient(115deg, transparent 25%, rgba(255, 255, 255, 0.48) 48%, transparent 68%);
+  transform: translateX(-120%);
+  transition: transform 650ms ease;
+}
+
+.project-card--animated:hover::after {
+  transform: translateX(120%);
+}
+
+.project-card--animated .project-card__glow {
+  transition: opacity 240ms ease, transform 500ms ease;
+}
+
+.project-card--animated:hover .project-card__glow {
+  opacity: 0.38;
+  transform: scale(1.04);
+}
+
+.project-card--animated .icon-link {
+  transition: color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+
+.project-card--animated .icon-link:hover {
+  transform: rotate(7deg) scale(1.08);
+  background: var(--accent);
+  color: #fffdf8;
+}
+
+.project-card--animated:focus-within {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+@keyframes project-arrive {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-card--animated {
+    animation: none;
+  }
+
+  .project-card--animated,
+  .project-card--animated::after,
+  .project-card--animated .project-card__glow,
+  .project-card--animated .icon-link {
+    transition: none;
+  }
+
+  .project-card--animated:hover {
+    transform: none;
+  }
+}
