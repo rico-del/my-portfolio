@@ -1,4 +1,4 @@
-import { ArrowDownRight, ArrowUpRight, Mail } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { contact } from '../data/portfolioData.js';
 
 const links = [
