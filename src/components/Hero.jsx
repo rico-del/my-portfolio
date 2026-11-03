@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ArrowRight, Download, Github, MapPin } from 'lucide-react';
 import { about, contact, terminalLines } from '../data/portfolioData.js';
 import { useTypewriter } from '../hooks/useTypewriter.js';
@@ -22,17 +22,10 @@ const typewriterSource = [
 
 function TerminalPanel() {
   const typed = useTypewriter(typewriterSource);
-  const [visibleLines, setVisibleLines] = useState(1);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setVisibleLines((count) => (count >= terminalLines.length ? 1 : count + 1));
-    }, 2600);
-    return () => clearInterval(interval);
-  }, []);
+  const [visibleLines] = useState(() => Math.min(3, terminalLines.length));
 
   return (
-    <div className="terminal" role="img" aria-label="Live deployment terminal simulation">
+    <div className="terminal" role="img" aria-label="Deployment terminal simulation">
       <div className="terminal-bar">
         <span className="dot dot-red" />
         <span className="dot dot-yellow" />
@@ -46,14 +39,14 @@ function TerminalPanel() {
         {terminalLines.slice(0, visibleLines).map((line) => (
           <p className="terminal-line" key={line.command}>
             <span className="terminal-prompt">{line.prompt}</span>
-            <span className="terminal-dollar">❯</span>
+            <span className="terminal-dollar" aria-hidden="true">❯</span>
             <span className="terminal-command">{line.command}</span>
           </p>
         ))}
-        <p className="terminal-line">
+        <p className="terminal-line terminal-line--typing">
           <span className="terminal-prompt">intro</span>
-          <span className="terminal-dollar">❯</span>
-          <span className="terminal-command">
+          <span className="terminal-dollar" aria-hidden="true">❯</span>
+          <span className="terminal-command terminal-command--typing">
             {typed}
             <span className="terminal-cursor" aria-hidden="true" />
           </span>
@@ -115,7 +108,7 @@ function Hero() {
           <span className="hero-panel__status">
             <MapPin size={14} aria-hidden="true" /> {contact.location}
           </span>
-</div>
+        </div>
         <TerminalPanel />
         <div className="hero-panel__footer">
           <div>

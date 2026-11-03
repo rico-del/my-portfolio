@@ -1,47 +1,64 @@
 import { useEffect, useState } from 'react';
 
-/**
- * Types a list of strings character by character, then waits and
- * starts typing the next string. Returns the currently visible text.
- */
-export function useTypewriter(lines, { typingSpeed = 38, deleteSpeed = 18, pauseMs = 1600 } = {}) {
+/** Types a list of strings with one timer at a time and cleans up on unmount. */
+export function useTypewriter(lines, { typingSpeed = 52, deleteSpeed = 28, pauseMs = 1800 } = {}) {
   const [displayed, setDisplayed] = useState('');
 
   useEffect(() => {
+    const firstLine = lines[0] ?? '';
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    if (motionQuery.matches) {
+      setDisplayed(firstLine);
+      return undefined;
+    }
+
+    if (lines.length === 0) {
+      setDisplayed('');
+      return undefined;
+    }
+
     let lineIndex = 0;
     let charIndex = 0;
-    let isDeleting = false;
-    let timeout = 0;
+    let deleting = false;
+    let timeoutId;
+    let cancelled = false;
+
+    const schedule = (delay) => {
+      timeoutId = window.setTimeout(tick, delay);
+    };
 
     const tick = () => {
-      const currentLine = lines[lineIndex] ?? '';
+      if (cancelled) return;
 
-      if (!isDeleting) {
-        charIndex += 1;
-        setDisplayed(currentLine.slice(0, charIndex));
+      const line = lines[lineIndex] ?? '';
+      if (!deleting) {
+        charIndex = Math.min(charIndex + 1, line.length);
+        setDisplayed(line.slice(0, charIndex));
 
-        if (charIndex === currentLine.length) {
-          timeout = window.setTimeout(() => {
-            isDeleting = true;
-            tick();
-          }, pauseMs);
+        if (charIndex === line.length) {
+          deleting = true;
+          schedule(pauseMs);
           return;
         }
       } else {
-        charIndex -= 1;
-        setDisplayed(currentLine.slice(0, charIndex));
+        charIndex = Math.max(charIndex - 1, 0);
+        setDisplayed(line.slice(0, charIndex));
 
         if (charIndex === 0) {
-          isDeleting = false;
+          deleting = false;
           lineIndex = (lineIndex + 1) % lines.length;
         }
       }
 
-      timeout = window.setTimeout(tick, isDeleting ? deleteSpeed : typingSpeed);
+      schedule(deleting ? deleteSpeed : typingSpeed);
     };
 
-    timeout = window.setTimeout(tick, typingSpeed);
-    return () => window.clearTimeout(timeout);
+    schedule(typingSpeed);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timeoutId);
+    };
   }, [lines, typingSpeed, deleteSpeed, pauseMs]);
 
   return displayed;

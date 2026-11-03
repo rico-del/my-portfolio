@@ -43,12 +43,67 @@
   outline-offset: 4px;
 }
 
+/* A quiet, slow-moving wash of warm light sits behind the page content. */
+body::after {
+  background-size: 150% 150%;
+  background-repeat: no-repeat;
+  animation: ambient-drift 38s ease-in-out infinite alternate;
+  will-change: background-position;
+}
+
+@keyframes ambient-drift {
+  0% { background-position: 0% 0%, 100% 0%; }
+  100% { background-position: 100% 100%, 0% 100%; }
+}
+
+/* Keep terminal geometry steady while text changes, avoiding panel reflow. */
+.terminal-body {
+  min-height: 184px;
+}
+
+.terminal-line {
+  min-width: 0;
+  align-items: flex-start;
+  line-height: 1.55;
+}
+
+.terminal-prompt,
+.terminal-dollar {
+  flex: 0 0 auto;
+}
+
+.terminal-command {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.terminal-line--typing {
+  min-height: 3.1em;
+  margin-bottom: 0;
+}
+
+.terminal-command--typing {
+  display: inline-block;
+  min-height: 2.8em;
+}
+
+.terminal-cursor {
+  width: 0.55em;
+  height: 1em;
+  margin-left: 3px;
+  vertical-align: -0.12em;
+}
+
 @keyframes project-arrive {
   from { opacity: 0; transform: translateY(18px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  body::after {
+    animation: none;
+  }
+
   .project-card--animated {
     animation: none;
   }
@@ -62,5 +117,11 @@
 
   .project-card--animated:hover {
     transform: none;
+  }
+
+  .terminal-cursor,
+  .pulse-dot,
+  .signal-dot {
+    animation: none;
   }
 }
