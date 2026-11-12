@@ -1,4 +1,4 @@
-import { ArrowDownRight, ArrowUpRight, Github, MapPin } from 'lucide-react';
+import { ArrowDownRight, ArrowUpRight, FileText, Github, MapPin } from 'lucide-react';
 import { about, contact, terminalLines } from '../data/portfolioData.js';
 import EditorialReveal from './EditorialReveal.jsx';
 
@@ -14,6 +14,7 @@ function Hero() {
           <div className="hero__actions">
             <a className="action-primary" href="#work">Explore selected work <ArrowDownRight size={17} aria-hidden="true" /></a>
             <a className="action-text" href={contact.github} target="_blank" rel="noreferrer"><Github size={17} aria-hidden="true" /> GitHub profile <ArrowUpRight size={15} aria-hidden="true" /></a>
+            <a className="action-text" href={contact.resume} target="_blank" rel="noreferrer"><FileText size={17} aria-hidden="true" /> Résumé <ArrowUpRight size={15} aria-hidden="true" /></a>
           </div>
           <div className="hero__note"><span>FOCUS</span> AWS · Terraform · CI/CD · Containers</div>
         </EditorialReveal>
