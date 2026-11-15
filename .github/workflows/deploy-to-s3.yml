@@ -51,3 +51,9 @@ jobs:
             --delete \
             --cache-control "public, max-age=31536000, immutable" \
             --exclude ".git/*"
+
+      - name: Invalidate CloudFront
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id "${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}" \
+            --paths "/*"
